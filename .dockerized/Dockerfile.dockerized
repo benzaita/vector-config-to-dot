@@ -1,0 +1,6 @@
+
+FROM python:3.8
+
+RUN pip install pipenv==2021.5.29 \
+ && apt-get update \
+ && apt-get install --quiet -y graphviz

@@ -1,0 +1,4 @@
+[sources.in]
+type = "syslog"
+mode = "tcp"
+address = "0.0.0.0:{{ subject_port }}"
