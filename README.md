@@ -7,7 +7,7 @@ This is a tool to generate a Graphviz DOT file from a set of Vector configuratio
 ## Usage
 
 ```shell
-> pipenv run ./main.py fixtures/multiple_files_01/*
+> cat fixtures/multiple_files_01/* | pipenv run ./main.py
 digraph {
         in [label="in (syslog)" shape=ellipse style="rounded, filled"]
         company_api [label="company_api (field_filter)" shape=box style="rounded, filled"]
@@ -22,7 +22,7 @@ digraph {
 You can also generate an image if you have `dot` installed:
 
 ```shell
-pipenv run ./main.py fixtures/multiple_files_01/* | dot -Tsvg > output.svg
+cat fixtures/multiple_files_01/* | pipenv run ./main.py | dot -Tsvg > output.svg
 ```
 
 ![Sample generated image](sample_output.svg)

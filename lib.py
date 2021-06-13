@@ -1,17 +1,7 @@
 import logging
-from typing import List
-import toml
 import graphviz
 
 logger = logging.getLogger(__name__)
-
-def load_vector_config(config_file_paths: List[str]) -> dict:
-    logger.info(f"Reading configs. files={config_file_paths}")
-    configs = [toml.load(config_file_path) for config_file_path in config_file_paths]
-    merged_config = {}
-    for config in configs:
-        merged_config.update(config)
-    return merged_config
 
 def vector_config_to_dot(config: dict) -> str:
     source_components = config.get('sources', {})
