@@ -50,4 +50,10 @@ def _add_edges(components, graph):
     for component_name, component_spec in components.items():
         input_names = component_spec['inputs'] if 'inputs' in component_spec else []
         for input_name in input_names:
-            graph.edge(input_name, component_name)
+            if input_name.find('.') > -1:
+                input_name_parts = input_name.split('.')
+                main_input_name = input_name_parts[0]
+                subinput_name = ".".join(input_name_parts[1:])
+                graph.edge(main_input_name, component_name, label=subinput_name)
+            else:
+                graph.edge(input_name, component_name)
