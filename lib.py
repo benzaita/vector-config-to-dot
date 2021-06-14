@@ -9,7 +9,11 @@ def vector_config_to_dot(config: dict) -> str:
     transform_components = config.get('transforms', {})
     all_components = {**source_components, **sink_components, **transform_components}
 
-    graph = graphviz.Digraph()
+    graph = graphviz.Digraph(graph_attr={
+        'nodesep': '0.5',
+        # 'rankdir': 'LR',
+        'colorscheme': 'prgn4',
+    })
 
     with graph.subgraph(name='cluster_sources') as cluster:
         cluster.attr(color='white')
@@ -33,11 +37,18 @@ def _get_node_args(kind: str, name: str, spec: dict) -> dict:
         'transform': 'box',
         'sink': 'ellipse',
     }
+    color_by_kind = {
+        'source': '3',
+        'transform': '2',
+        'sink': '4',
+    }
     
     return {
-        'label': f"{name} ({spec['type']})",
+        'label': f"{name}\n({spec['type']})",
         'style': 'rounded, filled',
         'shape': shape_by_kind[kind],
+        'color': color_by_kind[kind],
+        'colorscheme': 'prgn4',
     }
     
 def _add_nodes(component_kind: str, components, graph):
