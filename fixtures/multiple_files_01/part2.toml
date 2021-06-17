@@ -17,15 +17,20 @@ data_dir = "/var/lib/vector"
 ##
 
 [transforms.company_api]
-type = "field_filter"
-inputs = ["in"]
-field = "appname"
-value = "company-api"
+  type = "route"
+  inputs = ["in"]
+
+  route."lane_1" = '.status_code != 200 && !includes(["info", "debug"], .severity)' # example
+  route."lane_2" = '.status_code != 400 && !includes(["info", "debug"], .severity)' # example
 
 [transforms.company_api_json]
 type = "json_parser"
-inputs = ["company_api"]
+inputs = ["company_api.lane_1"]
 drop_invalid = true
+
+[sinks.console]
+type = "console"
+inputs = ["company_api.lane_2"]
 
 [transforms.company_api_timestamp]
 type = "split"
